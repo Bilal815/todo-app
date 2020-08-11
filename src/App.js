@@ -7,8 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Input, InputLabel, FormControl } from '@material-ui/core';
 import Todo from './Todo'
 import './App.css';
-import db from 'db';
-import firebase from 'firebase';
+import db from './firebase';
+import firebase from './firebase';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -18,7 +18,6 @@ function App() {
 useEffect(() => {
   // this code here... fires when the app.js loads
   db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-    console.log(snapshot.docs.map(doc => doc.data()))
     setTodos(snapshot.docs.map(doc => doc.data().todo))
   })
 }, []);
