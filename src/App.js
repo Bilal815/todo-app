@@ -36,15 +36,15 @@ useEffect(() => {
 
   return (
     <div className="App">
-      <h1>Hello, Crazy Programmers!</h1>
+      <h1>TODO LIST 📝</h1>
       <form>  
         {/*<input />*/}
         <FormControl>
-          <InputLabel>Write  TODO&#9989;</InputLabel>
-          <Input value={input} onChange={e => setInput(e.target.value)}/>
+          <InputLabel>Write  TODO &#9989;</InputLabel>
+          <Input value={input} onChange={e => {setInput(e.target.value)}}/>
         </FormControl>
         <Button type="submit" disabled={!input} variant="contained" color="primary" onClick={addTodo}>
-          Add TODO
+          Add TODO  &#128071;
         </Button>
       </form>
 

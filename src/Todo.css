@@ -1,3 +1,17 @@
-.todo__list {
-    text-align: center;
+svg {
+    padding: 7px 7px;
+}
+
+svg:hover {
+    opacity: 0.1;
+    cursor: pointer;
+}
+
+ul>ul button {
+    height: 90px;
+    width: 70px;
+}
+
+ul>ul button:hover {
+    cursor: pointer;
 }

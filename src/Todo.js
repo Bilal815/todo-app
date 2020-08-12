@@ -26,24 +26,25 @@ export default function Todo(props) {
             todo: input,
         }, { merge: true })
         setOpen(false);
+        setInput('');
     }
 
     return (
             <>
             <Modal open={open} onClose={e => setOpen(false)}>
                 <div className={classes.paper}>
-                    <h1>I'm a modal</h1>
+                    <h1>Change Your TODO &#9989;</h1>
                     <input placeholder={props.todo.todo} value={input} onChange={e => setInput(e.target.value)}/>
-                    <Button onClick={updateTodo}>Update Todo</Button>
+                    <Button  onClick={updateTodo}>Update Todo</Button>
                 </div>
             </Modal>
             <List className="todo__list">
             <ListItem>
                 <ListItemAvatar>
                 </ListItemAvatar>
-                <ListItemText primary="Todos" secondary={props.todo.todo} />
+                <ListItemText primary={"Todos"} secondary={props.todo.todo} />
             </ListItem>
-            <button onClick={e => setOpen(true)}>Edit</button>
+            <button onClick={e => setOpen(true)}>&#9999; Edit</button>
             <DeleteForeverIcon onClick={e => db.collection('todos').doc(props.todo.id).delete()}/>
             </List>
             </>
