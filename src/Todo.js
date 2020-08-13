@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import './Todo.css'
-import {List, ListItem, ListItemAvatar, ListItemText, Button, Modal, makeStyles} from '@material-ui/core'
+import {
+    List, 
+    ListItem, 
+    // ListItemAvatar, 
+    ListItemText, 
+    Button, 
+    Modal, 
+    makeStyles
+} from '@material-ui/core'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import db from './firebase';
 
@@ -47,14 +55,13 @@ export default function Todo(props) {
                 </div>
             </Modal>
             <List className="todo__list">
-            <ListItem>
-                <ListItemAvatar>
-                </ListItemAvatar>
-                <ListItemText className="makeStyles-p-2" primary={"Todos"} secondary={props.todo.todo} />
-            </ListItem>
-            <button className={classes.p}>&#9989;</button>
-            <button onClick={e => setOpen(true)}>&#9999; Edit</button>
-            <DeleteForeverIcon onClick={e => db.collection('todos').doc(props.todo.id).delete()}/>
+                <ListItem>
+                    {/*<ListItemAvatar></ListItemAvatar>*/}
+                    <ListItemText className="makeStyles-p-2" primary={"Todos"} secondary={props.todo.todo} />
+                </ListItem>
+                    <button className={classes.p}>&#9989;</button>
+                    <button onClick={e => setOpen(true)}>&#9999;Edit</button>
+                <DeleteForeverIcon onClick={e => db.collection('todos').doc(props.todo.id).delete()}/>
             </List>
             </>
     )
