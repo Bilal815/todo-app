@@ -13,7 +13,15 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    p: {
+        textDecoration: 'line-through',
+        opacity: '80%'
+    },
 }));
+
+
+
+
 
 export default function Todo(props) {
     const [input, setInput] = useState();
@@ -42,8 +50,9 @@ export default function Todo(props) {
             <ListItem>
                 <ListItemAvatar>
                 </ListItemAvatar>
-                <ListItemText primary={"Todos"} secondary={props.todo.todo} />
+                <ListItemText className="makeStyles-p-2" primary={"Todos"} secondary={props.todo.todo} />
             </ListItem>
+            <button className={classes.p}>&#9989;</button>
             <button onClick={e => setOpen(true)}>&#9999; Edit</button>
             <DeleteForeverIcon onClick={e => db.collection('todos').doc(props.todo.id).delete()}/>
             </List>
