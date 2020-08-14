@@ -1,6 +1,8 @@
 .App {
     text-align: center;
+    /*
     margin: 80px 500px;
+    */
 }
 
 .App p {
@@ -10,9 +12,13 @@
 
 .App ul>ul {
     display: flex;
+    /*
     border-top: 5px solid whitesmoke;
     border-left: 5px solid whitesmoke;
     border-right: 5px solid whitesmoke;
+    */
+    border: 5px solid whitesmoke;
+
     align-items: center;
     justify-content: space-around;
     border-radius: 5px;
@@ -22,9 +28,12 @@
     -o-border-radius: 5px;
 }
 
+/*
 .App ul>ul:last-child {
+
     border-bottom: 5px solid whitesmoke;
 }
+*/
 
 .App button {
     margin-left: 25px;

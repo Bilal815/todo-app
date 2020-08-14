@@ -15,3 +15,9 @@ ul>ul button {
 ul>ul button:hover {
     cursor: pointer;
 }
+ul>ul.MuiList-root.todo__list {
+    margin: 10px auto;
+}
+.todo__list {
+    width: 50%;
+}

@@ -17,42 +17,70 @@ function App() {
   // when the app loads, we need to listen to the database and fetch new todos as they get added/removed
 useEffect(() => {
   // this code here... fires when the app.js loads
-  db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-    setTodos(snapshot.docs.map(doc => ({id: doc.id, todo: doc.data().todo})))
+  db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => 
+  {
+    setTodos(snapshot.docs.map(doc => (
+      {
+        id: doc.id, 
+        todo: doc.data().todo,
+        timestamp: doc.Cd.version.timestamp
+      }
+    )))
   })
-}, []);
+
+}, [])
+
+
+  /**
+   * clears up the input field after sumitting
+   */
+  const clearInput = () => setInput('')
 
   const addTodo = (e) => {
-    e.preventDefault(); //this will stop unncessary page REFRESH
+    //this will stop unncessary page REFRESH/POSTBACK
+    e.preventDefault()
     
     db.collection('todos').add({
       todo: input,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    }).then((newInputRef) => {
+
+      // there path is /todos
+      const newItem = {
+        id: newInputRef.id,
+        desc: input
+      }
+
+      // setTodos([...todos, input]); //push the input to the state
+      setTodos([...todos, newItem]); //push the input to the state
+      clearInput()
+
+    }).catch((error) => {
+      console.dir(error)
     })
-    
-    setTodos([...todos, input]); //push the input to the state
-    setInput(''); //clears up the input field after sumitting
   }
+
+
+  const renderTodoList = () => Array.isArray(todos) && todos.length > 0 
+    ? todos.map(todo => <Todo key={todo.id} todo={todo} />)
+      : null
 
   return (
     <div className="App">
-      <h1>TODO LIST 📝</h1>
+      <h1 className="capitalized">to-do list 📝</h1>
       <form>  
         {/*<input />*/}
         <FormControl>
-          <InputLabel>Write  TODO &#9989;</InputLabel>
+          <InputLabel>Write To-Do &#9989;</InputLabel>
           <Input value={input} onChange={e => {setInput(e.target.value)}}/>
         </FormControl>
         <Button type="submit" disabled={!input} variant="contained" color="primary" onClick={addTodo}>
-          Add TODO  &#128071;
+          Add  &#128071;
         </Button>
       </form>
 
       <ul>
-        {todos.map(todo => (
-          <Todo todo={todo} />
-          /*<li>{todo}</li>*/
-        ))}
+        {renderTodoList()}
       </ul>
 
     </div>
