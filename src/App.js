@@ -21,9 +21,8 @@ useEffect(() => {
   {
     setTodos(snapshot.docs.map(doc => (
       {
+        ...doc.data(),
         id: doc.id, 
-        todo: doc.data().todo,
-        timestamp: doc.Cd.version.timestamp
       }
     )))
   })
