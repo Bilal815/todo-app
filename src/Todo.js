@@ -31,19 +31,43 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function Todo(props) {
+const Todo = props => {
+
+    let { todo } = props
+    let { id, isCompleted } = todo
+    todo = todo.todo
+
+
     const [input, setInput] = useState();
     const classes = useStyles();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false)
+
     const updateTodo = () => {
         // update the todo with the new input text
-
-        db.collection('todos').doc(props.todo.id).set({
+        db.collection('todos').doc(id).set({
             todo: input,
         }, { merge: true })
-        setOpen(false);
-        setInput('');
+        setOpen(false)
+        setInput('')
     }
+
+    const toggleIsCompleted = () => {
+        db.collection('todos').doc(id).set({
+            isCompleted: !isCompleted
+        }, { merge: true })
+    }
+
+    const deleteForever = () => {
+        db.collection('todos').doc(id).delete()
+    }
+
+
+
+    // Logic for dynamically applying the makeStyles-p-2 class which makes things be crossed out...
+    let className = ''
+    if(isCompleted) className += ' makeStyles-p-2'
+
+
 
     return (
             <>
@@ -56,13 +80,15 @@ export default function Todo(props) {
             </Modal>
             <List className="todo__list">
                 <ListItem>
-                    {/*<ListItemAvatar></ListItemAvatar>*/}
-                    <ListItemText className="makeStyles-p-2" primary={"Todos"} secondary={props.todo.todo} />
+                    <ListItemText className={className} primary="Todos" secondary={props.todo.todo} />
                 </ListItem>
-                    <button className={classes.p}>&#9989;</button>
-                    <button onClick={e => setOpen(true)}>&#9999;Edit</button>
-                <DeleteForeverIcon onClick={e => db.collection('todos').doc(props.todo.id).delete()}/>
+                <button className={className} onClick={toggleIsCompleted}>&#9989;</button>
+                <button className={className} onClick={e => setOpen(true)}>&#9999;Edit</button>
+                <DeleteForeverIcon onClick={deleteForever}/>
+
             </List>
             </>
     )
 }
+
+export default Todo

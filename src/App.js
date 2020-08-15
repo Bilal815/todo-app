@@ -22,7 +22,7 @@ useEffect(() => {
     setTodos(snapshot.docs.map(doc => (
       {
         ...doc.data(),
-        id: doc.id, 
+        id: doc.id
       }
     )))
   })
@@ -41,13 +41,15 @@ useEffect(() => {
     
     db.collection('todos').add({
       todo: input,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      isCompleted: false// new Data item
     }).then((newInputRef) => {
-
+      
       // there path is /todos
       const newItem = {
         id: newInputRef.id,
-        desc: input
+        desc: input,
+        isCompleted: false
       }
 
       // setTodos([...todos, input]); //push the input to the state
