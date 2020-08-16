@@ -21,3 +21,7 @@ ul>ul.MuiList-root.todo__list {
 .todo__list {
     width: 50%;
 }
+
+.isComplete {
+    text-decoration: line-through;
+}
