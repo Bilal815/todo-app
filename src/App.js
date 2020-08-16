@@ -33,17 +33,22 @@ const App = () => {
   // when the app loads, we need to listen to the database and fetch new todos as they get added/removed
   useEffect(() => {
     // this code here... fires when the app.js loads
-    db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => 
-    {
-      setTodos(snapshot.docs.map(doc => (
-        {
-          ...doc.data(),
-          id: doc.id
-        }
-      )))
-    })
+    loadData()
 
   }, [])
+
+
+  const loadData = () => {
+    db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => 
+      {
+        setTodos(snapshot.docs.map(doc => (
+          {
+            ...doc.data(),
+            id: doc.id
+          }
+        )))
+      })
+  }
 
 
   /**
@@ -95,10 +100,20 @@ const App = () => {
     })
   }
 
+  const toggleIsCompleted = (id, isCompleted) => {
+      db.collection('todos').doc(id).set({
+        isCompleted: !isCompleted
+    }, { merge: true }).then(() => {
+    })
+  }
 
-  const renderTodoList = () => Array.isArray(todos) && todos.length > 0 
-    ? todos.map(todo => <Todo openModal={openModal} key={todo.id} todo={todo} />)
+
+  const renderTodoList = () => {
+    debugger
+    return Array.isArray(todos) && todos.length > 0 
+    ? todos.map(todo => <Todo toggleIsCompleted={toggleIsCompleted} openModal={openModal} key={todo.id} todo={todo} />)
       : null
+  }
       
   const useStyles = makeStyles((theme) => ({
         paper: {
@@ -127,6 +142,8 @@ const App = () => {
     }
     setModalData(newModalState)
   }
+
+
 
 
   return (
